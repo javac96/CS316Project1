@@ -1,0 +1,94 @@
+
+/*
+This is CS316 PROJECT 1: Lexical Analyzer coded in Java programming language.
+This class defines I/O variables and functions used by lexical analyzers and parsers.
+ ********************************************************************************************************************************************
+ This lexical Analyzer program is a modification of the sample lexical analyzer program provided for the project's EBNF.
+  * There were more states added to the enum state. There were 9 nine keyword states added as well.
+   * The nextState() was modified to reflect the DFA provided for the project.
+    * The project description required the recognition of keywords : false, true, int, float, boolean, if, else, while, print.
+     * This was achieved by adding a new utility function called checkForKeyword(). In the driver() if the state was determined to be final 
+      * the program goes on to check if the state is id. In the case that it is id it check if the string is one of the keywords.
+
+       *********************************************************************************************************************************************
+       To run the program from command line
+        * 0. Create a directory named CS316Project1. Save the emailed file "LexicalAnalyzer.java" in the directory.
+	 * 1. Create input files and output files and save it in the directory CS316Project1.
+	  * 1. Navigate to the directory where CS316Project1 is stored.
+	   * 2. Type javac LexicalAnalyzer.java
+	    * 3. Type java LexicalAnalyzer inputFileName.txt outputFileName.txt
+
+	    Note: inputFileName.txt and outputFileName.txt can be substituted for the name of your input and output file that you want to run the prgram for.
+
+	     *********************************************************************************************************************************************
+	      */
+
+	      import java.io.*;
+
+	      public class IO {
+
+	      	public static BufferedReader bufferedReader;
+			public static PrintWriter printWriter;
+				public static int input;	// the current input character on "inStream"
+					public static char ch;	// used to convert the variable "a" to the char type whenever necessary
+
+						public static int getNextChar(){
+								// Returns the next character on the input stream.	
+										try{
+													return bufferedReader.read();
+															}catch (IOException ioe){
+																		ioe.printStackTrace();
+																					return -1;
+																							}//catch
+
+																								}//end of method getNexChar
+
+																									public static int getChar(){
+																											// Returns the next non-whitespace character on the input stream.
+																													// Returns -1, end-of-stream, if the end of the input stream is reached.
+
+																															int result = getNextChar();
+																																	while (Character.isWhitespace(result))
+																																				result = getNextChar();
+																																						return result;
+
+																																							}//end of method getChar
+
+
+																																								//method to display the output in a line
+																																									public static void displayLine(String strln){
+																																											printWriter.println(strln);
+																																												}//end of method displayLine
+
+																																													public static void setIO(String inputFile, String outputFile){
+																																															// Sets the input and output streams to "inputFile" and "outputFile", respectively.
+																																																	// Sets the current input character "a" to the first character on the input stream.
+
+																																																			try{
+																																																						bufferedReader = new BufferedReader(new FileReader(inputFile));
+																																																									printWriter = new PrintWriter(new FileOutputStream(outputFile)); 
+																																																												input = bufferedReader.read();
+
+																																																														}catch (FileNotFoundException fnfe){
+																																																																	fnfe.printStackTrace();
+
+																																																																			}catch(IOException ie){
+																																																																						ie.printStackTrace();
+																																																																								}
+
+																																																																									}//end of setIO
+
+
+																																																																										public static void closeIO(){
+																																																																												//close the input and output file
+																																																																														try{
+																																																																																	bufferedReader.close();
+																																																																																				printWriter.close();
+
+																																																																																						}catch(IOException ie){
+																																																																																									ie.printStackTrace();
+																																																																																											}
+																																																																																												}//end of method closeIO
+
+																																																																																												}//end of class IO
+
